@@ -4,8 +4,8 @@ function [ val,grad ] = G3Function(u,lambda)
 
 uAbs = abs(u);
 
-val = sum(sum(lambda*uAbs - (lamda^2)*log(1+uAbs/lambda)));
-grad = 0.5*lambda/(lambda+uAbs);
+val = sum(sum(lambda*uAbs - (lambda^2)*log(1+uAbs/lambda)));
+grad = u.*(lambda./(lambda+uAbs));
 
 end
 

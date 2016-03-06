@@ -4,7 +4,7 @@ function [ val,grad ] = HuberFunction(u,lambda)
 
 uAbs = abs(u);
 
-thresholdCriteria = uAbs<lambda;
+thresholdCriteria = uAbs<=lambda;
 
 val = zeros(size(u));
 grad = zeros(size(u));
@@ -12,8 +12,8 @@ grad = zeros(size(u));
 val(thresholdCriteria)=0.5*uAbs(thresholdCriteria);
 val(~thresholdCriteria)=lambda*uAbs(~thresholdCriteria)-0.5*(lambda^2);
 
-grad(thresholdCriteria) = 0.5;
-grad(~thresholdCriteria) = 0.5*lambda./uAbs(~thresholdCriteria);
+grad(thresholdCriteria) = u(thresholdCriteria);
+grad(~thresholdCriteria) = lambda*sign(u(~thresholdCriteria));
 
 val = sum(sum(val));
 end

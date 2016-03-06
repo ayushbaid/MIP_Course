@@ -1,4 +1,4 @@
-function [x,logCostArray,iter] = GradientDescent(xInit,y,g,maxIters,lambda)
+function [x,logCostArray,iter] = GradientDescent(xInit,y,g,maxIters,alpha)
 %GradientDescent Implements adaptive gradient descent using potential function
 %for MRF and other params passed as arguments
 
@@ -11,8 +11,8 @@ logCostArray = zeros(maxIters,1);
 [logCost2,grad2] = MRFEval(x,g);
 [logCost1,grad1] = GetLikelihoodTerm(x,y);
 
-logCost = lambda*logCost1+(1-lambda)*logCost2;
-grad = lambda*grad1+(1-lambda)*grad2;
+logCost = alpha*logCost1+(1-alpha)*logCost2;
+grad = alpha*grad1+(1-alpha)*grad2;
 logCostArray(1)=logCost;
 
 iter=1;
@@ -26,8 +26,8 @@ while(1)
     [newLogCost2,newGrad2] = MRFEval(xNew,g);
     [newLogCost1,newGrad1] = GetLikelihoodTerm(xNew,y);
     
-    newLogCost = lambda*newLogCost1+(1-lambda)*newLogCost2;
-    newGrad = lambda*newGrad1+(1-lambda)*newGrad2;
+    newLogCost = alpha*newLogCost1+(1-alpha)*newLogCost2;
+    newGrad = alpha*newGrad1+(1-alpha)*newGrad2;
     
     if newLogCost<logCost
         x = xNew;
